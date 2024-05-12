@@ -11,7 +11,7 @@ This is an iOS app that displays top entertainment news headlines using the News
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/news-app.git
+   git clone https://github.com/gurtej1992/NewsAPI.git
 Open the project in Xcode:
 
 bash
@@ -22,8 +22,7 @@ Build and run the app on your simulator or device.
 
 ## Usage
 Launch the app to view the top entertainment news headlines.
-## Screenshots
-Include screenshots of your app here.
+
 
 ## Credits
 News API - Used to fetch news headlines.
