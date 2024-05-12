@@ -8,38 +8,52 @@
 import UIKit
 
 class NewsListTableViewController: UITableViewController {
+    var articleListVM : ArticleListViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setup()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-
+    private func setup(){
+        getArticles(url: URL(string: "https://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=1371fa4e7fbd41b8a68bf243651b3b32")!, completion: { [self] articles in
+            if let articles = articles {
+                articleListVM = ArticleListViewModel(articles: articles)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+        )
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+    }
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return articleListVM == nil ? 0 : articleListVM.numberOfSections
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return articleListVM.numberOfRowsInSection(section)
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ArticleTableViewCell
+        let articleViewModel = articleListVM.articleAtIndex(indexPath.row)
+        cell.lblTitle.text = articleViewModel.title
+        cell.lblDescription.text = articleViewModel.description
+        
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
